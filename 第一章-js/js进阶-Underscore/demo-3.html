@@ -1,0 +1,54 @@
+<html>
+
+<head>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>js另外一种库underscore-防抖和节流</title>
+    <meta name="author" content="zhaomi">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no">
+</head>
+
+<body>
+
+    <script src="underscore-v1.2.js"></script>
+    <script>
+        function Person(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+        Person.prototype.one = function () {
+            console.log("hello keys");
+        }
+        var obj01 = new Person("max", 20);
+        // keys存在ie9兼容性问题，同时也只会查找自身
+        console.log("只会查找自身的keys ：", Object.keys(obj01)); //["name"]
+
+        console.log("只会查找自身的_.extendOwn ：", _.extendOwn({}, obj01)); //["name"]
+        console.log("_.keys ===", _.keys(obj01));
+        console.log("只会查找自身的_.value ：", _.value(obj01)); //["name"]
+        console.log("自身加原型链上的属性，all ===", _.allKeys(obj01));
+        console.log("自身加原型链上的对象扩展，extend ===", _.extend({}, obj01));
+
+        console.log("_.invert把属性和值对调：", _.invert(obj01));
+        // ie9下某浏览器for..in也会有问题,toString关键词js未保护，当对象拓展了toString对象，for..in是检索不到的，
+        var obj02 = {
+            name: "zm",
+            toString: null
+        }
+        console.log("自身加原型链上的属性，_.allKeys obj02 ===", _.allKeys(obj02));
+
+
+
+        // 这个bug后来修复了，是所有在Object.prototype的扩展的方法在对象重命名上拓展的，是不可枚举的
+        for (var key in obj02) {
+            console.log(key); // name  one
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<html>
+
+<head>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title> moudel的核心代码搭建 </title>
+    <meta name="author" content="zhaomi">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no">
+</head>
+
+<body>
+    <script src="seaCopy.js"></script>
+    <script>
+        //启动模块加载器   
+        seaCopy.config({
+            alias: {
+                test01: "test01",
+                test02: "test02.js"
+            },
+            preload: [
+
+            ]
+        });
+        seaCopy.use(["test01", "test02"], function (test1, test2) {
+            console.log(test1);
+            console.log(test2);
+            console.log("sea-Copy......");
+        });
+
+        // function fn(require, exports, module) {
+        //     /* require("c.js")  */
+        //     // https://course.study.163.com/
+        //     var age = "30";
+        //     var b = require("b.js");
+        //     exports.age = age;
+        // }
+
+        // var str = fn.toString();
+
+        // var REQUIRE_RE = /\brequire\s*\(\s*(["'])(.+?)\1\s*\)/g;
+        // str = str.replace(/\/\*((\n|\r|.)*?)\*\//mg, ""); //去掉/**/
+        // str = str.replace(/(\s|\;|^|\{|\})\/\/.*$/mg, "") //去掉//
+        // console.log(str);
+        // str.replace(REQUIRE_RE, function (context, m1, m2) {
+        //     console.log(context) // require("b.js")
+        //     console.log(m2) //b.js
+        // })
+    </script>
+
+</body>
+
+</html>

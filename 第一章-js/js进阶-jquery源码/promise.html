@@ -1,0 +1,70 @@
+<html>
+
+<head>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title> jquery源码解析-promise/A</title>
+    <meta name="author" content="zhaomi">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no">
+</head>
+
+<body>
+
+    <script src="jquery-promise-v1.4.js"></script>
+    <!-- <script src="jQuery.1.0.2.js"></script> -->
+
+    <!-- <script src="../jquery-1.12.4.js"></script> -->
+    <script>
+        // ===========================
+        // Jquery.Deferred 
+        // 一个构造函数，返回一个链式实用对象方法来注册多个回调，回调队列，调用回调队列，并转达任何同步或者异步函数的成功或失败状态
+        // deferred.done
+        // 当Deferred 延迟对象解决时，调用添加处理程序
+        // deferred.fail()
+        // 当Deferred延迟对象拒绝时，调用添加处理程序
+        // deferred.progress()
+        // 当Deferred对象生成进度通知时，调用已添加的处理程序
+        // jQuery.when()
+        // 提供一种方法来执行一个或者多个对象的回调函数，通常表示异步操作
+        // .promise()
+        // 返回一个Promise对象来观察当某种类型的所有行动绑定到集合，排队与否还是已经完成
+        console.log("===========延迟对象==========");
+        var wait = function () {
+            var der = $.Deferred();
+            var test = function () {
+                console.log("2秒后执行");
+                der.resolve("max");
+            }
+            setTimeout(test, 2000);
+            return der;
+        }
+        console.log("===========promise==========");
+        $.when(wait())
+            .done(function (name) {
+                console.log("执行成功--->" + name);
+            })
+            .fail(function () {
+                console.log("执行失败");
+            });
+
+
+        /*
+        var cbs =  $.callbacks();   //队列        //  var list = tuple[2], jQuery.callbacks("once memory")
+        cbs.add(function(){   //添加处理函数    //promise.done()  promise.fail()
+        	
+        });
+        
+        cbs.fire();  //执行队列中的处理函数      //der.resolve("max"); 
+        
+        
+        */
+    </script>
+
+</body>
+
+</html>

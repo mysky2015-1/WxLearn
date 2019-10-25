@@ -1,0 +1,108 @@
+<html>
+
+<head>
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>js另外一种库underscore-模板加载器</title>
+    <meta name="author" content="zhaomi" />
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <style>
+        .presonlist {
+            margin: 20px auto;
+            width: 600px;
+            border: 1px solid #ddd;
+            border-spacing: 0;
+        }
+
+        .presonlist td {
+            border-bottom: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            background: green;
+            color: #fff;
+            padding: 5px 10px;
+        }
+
+        .presonlist .last-item td {
+            background: palevioletred;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div"></div>
+
+    <script src="underscore-v1.2.js"></script>
+    <script type="text/template" id="tpl">
+        <table class="presonlist">
+            <%obj.forEach(function(item,i,obj){%>
+                <%if(i===obj.length-1){%>
+                    <%-<tr class="last-item"> %>
+                <%}else{%>
+                    <%-<tr> %>
+                <%}%>
+                        <td>
+                            <%=item.name%>
+                        </td>
+                        <td>
+                            <%= item.age%>
+                        </td>
+                        <td>
+                            <%= item.hasChild%>
+                        </td>
+                        <td>
+                            <%= item.sex%>
+                        </td> 
+                    </tr>
+                <%})%>
+        </table>
+    </script>
+    <!-- -->
+    <script>
+        // 模板加载器我个人的理解就是，像php在页面传值一样，可以把接口传入的数据按照逻辑循环写在对应固定的模板里，vue组件应该底层也是这个道理
+        // 模板标识 {{ }} <%%>
+        // <%= %> 插入变量
+        // <%- %> HTML转义
+        // <% %> 执行任意的 JavaScript 代码
+        // <%+ %> 其它
+        var data = {
+            name: 'zm',
+            age: 32,
+            hasChild: 1,
+            sex: '女'
+        }
+        var presons = [{
+                name: 'max',
+                age: 40,
+                hasChild: 1,
+                sex: '男'
+            }, {
+                name: 'boll',
+                age: 18,
+                hasChild: 0,
+                sex: '男'
+            },
+            {
+                name: 'boll',
+                age: 18,
+                hasChild: 0,
+                sex: '男'
+            },
+            data
+        ]
+
+        var compiled = _.template(
+            '<%- <div class="h2title"> %> I am <%= name %> ;I am <%= age %> years old;I have  <%= hasChild %> children; My sex is ’ <%= sex %>‘ in Chinese；<%- </div> %>'
+        );
+        console.log(compiled(data));
+        var template = _.template(document.getElementById("tpl").innerHTML);
+        var str = template(presons);
+        document.querySelector("div").innerHTML = str;
+    </script>
+</body>
+
+</html>

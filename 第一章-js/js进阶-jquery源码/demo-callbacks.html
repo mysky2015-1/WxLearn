@@ -1,0 +1,167 @@
+<html>
+
+<head>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title> jquery源码解析--callbacks</title>
+    <meta name="author" content="zhaomi">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no">
+</head>
+
+<body>
+
+    <script src="jquery-v1.3.js"></script>
+    <script>
+        // once memory unique stopOnfalse
+        var cb = $.callbacks("once memory");
+        cb.add(function () {
+            console.log(1);
+        });
+        cb.add(function () {
+            console.log(3);
+        });
+        cb.fire();
+        // cb.fire(); //once
+
+        // memory立即执行
+        cb.add(function () {
+            console.log(2);
+        });
+
+        var cb2 = $.callbacks("unique");
+
+        function demo() {
+            console.log(" 测试 设置unique 参数，保证调用函数的唯一性");
+        }
+        cb2.add(demo, demo);
+        cb2.fire();
+
+        // =============fn.call(this)，为什么会有this这个设计呢
+        // 当我们去访问某个对象的属性以及对象的方法以及扩展，但是我又不方便把这个对象是什么告诉你，就用this来替代
+        var object = {
+            name: "max",
+            add: function () {
+                this.name;
+            }
+        }
+
+        function Person() {
+            this.name = "max";
+        }
+        new Person().name; //max
+
+        function fn() { //Function实例对象的实例
+            // this window属性 window扩展
+            console.log("call /apply都可以改变内部this的指向");
+            console.log(this);
+        }
+        // fn();
+        // fn.apply(object); //调用当前这个fn函数，改变内部this的指向
+        fn.call(object);
+
+
+        // this是指函数运行时的上下文环境
+        // 应用场景  作为函数调用  、对象方法调用、构造函数中调用  apply/call/this
+        // 面向对象的语言
+        // 操作对象  对象.属性  对象.方法
+        // 对象.alert();  window.alert(); 默认去window上去查找
+        // 
+
+        // window.fn()  ==  fn()// 全局对象  和window对象
+
+        // 解析参数类数组如何转变成普通数组的
+        Array.prototype.slice1 = function (start, end) {
+            var result = new Array();
+            start = start || 0;
+            end = end || this.length;
+            for (var i = start; i < end; i++) {
+                result.push(this[i]);
+            }
+            return result;
+        }
+        // console.log([1, 2, 3].slice1()); //返回一个副本
+
+        function fn02(a, b, c, d) {
+            console.log(arguments); //arguments为类数组
+            return [].slice1.call(arguments);
+        }
+
+        console.log(fn02(1, 3, 5, 6).push);
+
+        console.log("=========apply and call==========");
+
+        // apply
+        var obj = {};
+
+        function fn3(a, b, c, d) {
+            console.log(a);
+            console.log(b);
+            console.log(c);
+            console.log(d);
+        }
+        fn3.call(obj, 1, 2, 3, 4);
+        fn3.apply(obj, [1, 2, 3, 4]); //apply传的是数组
+        var bindFn = fn3.bind(obj); //fn3的副本,clone版本
+        var bindFn02 = fn3.bind(obj, 77, 99, 00, 55); //fn3的副本,clone版本
+        bindFn(66, 888, 100);
+        bindFn02();
+        console.log("===================");
+
+        $.fn3.extend({});
+        $.extend({});
+        // bind ---delegate ---on
+        // bind  $(selector).bind(event,data,function) 
+        // 为被选元素添加一个或多个事件处理程序，并规定事件发生时的运行函数
+        // 事件模型（事件冒泡，事件捕获）
+        // dom 0级事件  通过js指定事件处理程序的传统方式，就是将一个函数赋值给一个事件处理程序属性
+        // 例如
+        var object01 = document.body;
+        for (var key in object01) {
+            console.log("属性" + key + "值" + object01[key]);
+        }
+        // dom 2级事件
+        // 2级事件中增加定义了DOM事件模型的概念。DOM2级事件规定的事件流包括3个阶段：事件捕获阶段，处于目标阶段和事假冒泡阶段。首先发生的事件捕获，然后处于目标阶段，最后才是事件冒泡
+
+        // bind 和delegate 的集合体就是on
+        // $(selector).on(event,child,data,function) 
+        // on（）方法在被选元素及子元素上添加一个或多个事件处理程序
+        // 自Jquery 1.7版本起，on()方法基本替代了bind/delegate,为api提供了很多的便利
+    </script>
+    <div>
+        <ul id="proxy">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>
+    </div>
+    <script>
+        // 冒泡事件，耗费性能的做法
+        var ElemUI = document.getElementById("proxy");
+        var ElemLI = document.getElementByTagName("li");
+        for (var i = 0; i < ElemLI.length; i++) {
+            ElemLI[i].onclick = function () {
+                alert("loading...");
+            }
+        }
+
+        // 事件代理的做法
+        var proxy = document.getElementById("proxy");
+        proxy.onclick = function (event) {
+            var target = event.target;
+            if (target.nodeName.toLowerCase() == 'li') {
+                alert("proxy ...loading...");
+            }
+        }
+    </script>
+
+
+</body>
+
+</html>

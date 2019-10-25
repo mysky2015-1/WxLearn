@@ -1,0 +1,104 @@
+<html>
+
+<head>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title> jquery源码解析</title>
+    <meta name="author" content="zhaomi">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no">
+</head>
+
+<body>
+    <div id="div"></div>
+    <!-- <script src="jquery-v1.10.2.js"></script> -->
+    <script src="jquery-v1.1.js"></script>
+    <script>
+        //  
+        // console.log($);
+        // console.log($()); //$()创建jquery实例对象
+        // 给任意对象扩展
+        // 浅拷贝
+        var ret = {
+            name: "nax",
+            list: {
+                age: "30"
+            }
+        };
+        var res = {
+            list: {
+                sex: "男"
+            }
+        };
+        var ret01 = ["nax",
+            'ffgfg', 22
+        ];
+        var res01 = [
+            'list'
+        ];
+        // var obj = $.extend({}, {
+        //     name: "max",
+        //     age: "30"
+        // });
+        // var obj = $.extend({}, ret, res);
+        // console.log(obj);
+        // 深拷贝
+        var obj = $.extend(true, {}, ret, res);
+        // var obj = $.extend(true, {}, ret01, res01);
+        console.log(obj);
+
+        // // 给Jquery加扩展
+        // $.extend({
+        //     work: function () {
+
+        //     }
+        // });
+        // jQuery.work();
+        // // 给实例对象扩展
+        // $.fn.extend({
+        //     sex: "男"
+        // })
+        // $().sex;
+    </script>
+    <script src="jquery-v1.2.js"></script>
+    <script>
+        // ===========================
+        // 2.2.1选择器源码解析
+        // querySeletor --宿主环境的选择器
+        // console.log($("<a>"));
+        // console.log($("#div"));
+        // console.log($({
+        //     "s": "ss"
+        // }));
+        // var fntest = function () {
+        //     console.log("我只是个函数");
+        // }
+        // console.log($(fntest));
+        // onload是所有文档，css，js加载完毕之后，只能绑定一个方法，后面的会覆盖前边的
+        // DOMContentLoaded   html文加载档解析完成就去执行当dom加载完毕就会执行
+        // 浏览器渲染
+        // 1，解析html生成dom树，构造htmldom模型   DOMContentLoaded执行
+        // 2，解析css，生成cssdom规则树
+        // 3，遍历规则树，合并dom树和css规则树，生成渲染树
+        // 4，布局，计算每个节点的位置，大小信息
+        // 5，将每个节点绘制到页面上
+        // $(function () {})  ===》$(document).ready()===>DOMContentLoaded 
+        // 通过ready方法来实现让函数在队列里执行
+        // $(function () {
+        //     console.log("1");
+        // })
+        // $(function () {
+        //     console.log("2");
+        // })
+        // $(function () {
+        //     console.log("3");
+        // })
+    </script>
+
+</body>
+
+</html>

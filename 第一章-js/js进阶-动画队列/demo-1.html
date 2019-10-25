@@ -1,0 +1,104 @@
+<html>
+
+<head>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title> jquery源码解析-动画队列</title>
+    <meta name="author" content="zhaomi">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no">
+    <style>
+        .box {
+            background-color: blueviolet;
+            position: relative;
+            left: 500px;
+            width: 150px;
+            height: 150px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div" class="box"></div>
+    <!-- <script src="../jquery-1.12.4.js"></script> -->
+    <script src="jquery2.0.1.js"></script>
+
+
+    <script>
+        // queue为jquery动画定制的，animate给dom添加动画效果，基于队列模块来管理和执行动画函数
+        //  dom允许我们在dom元素上附加任何类型的数据，用于存储跟dom节点相关的数据，包括时间。动画
+        // 动画队列演示
+        var box = $('.box');
+
+        function fn(next) {
+            console.log(1);
+            // next(); // 相当于是调用  dequeue
+        }
+
+        function fn1(next) {
+            console.log(2);
+            // next(); // 相当于是调用  dequeue
+        }
+
+        function fn3() {
+            console.log(3);
+        }
+        // set入列  （元素，队列名称 处理函数）
+        $.queue(box, "max", fn);
+        $.queue(box, "max", fn1);
+        $.queue(box, "max", fn3);
+        $.queue(box, "min", fn1);
+        // get访问队列，根据传递的参数是两个还是三个来判断是访问还是入列
+        // console.log(jQuery.queue(box, "max"));
+
+        // 出列删除  依次访问，等同于callbacks的fire方法，只是dequeue是一次只调用一个方法，先进先出原则
+        $.dequeue(box, "max");
+        $.dequeue(box, "max");
+        // $.dequeue(box, "max");
+        // $.dequeue(box, "min");
+
+        // 动画
+        $('.box').animate({
+            left: 50,
+            duration: 2000
+        });
+
+        // 柯力化
+        var timeOfLife = 20;
+
+        function test(timeOfLife) {
+            console.log(timeOfLife);
+            return function (age) {
+                console.log(age);
+                return age > timeOfLife;
+            }
+        }
+        var testing = test(30);
+        testing(16);
+        // 组合函数
+        var compose = function (fn01, fn02) {
+            return function (arg) {
+                return fn01(fn02(arg));
+            }
+        }
+        var mult = function (x) {
+            return x * 5
+        }
+        var add = function (x) {
+            return x + 1
+        }
+        compose(mult, add)(2); //先加后乘
+        compose(add, mult)(2); //
+        // 声明式
+        var arr = [4, 9, 16, 25];
+        var rest = arr.map(Math.sqrt);
+        console.log(rest);
+    </script>
+
+</body>
+
+</html>

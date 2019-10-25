@@ -1,0 +1,37 @@
+<html>
+
+<head>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>js第一章考核题6题---密码校验</title>
+    <meta name="author" content="zhaomi">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no">
+</head>
+
+<body>
+    <div id="div"></div>
+    <script src="underscore-v1.2.js"></script>
+    <script>
+      //  密码长度6-12位，由数字、小写字母、大写字母组成，但必须至少包括2种字符。
+      var password = "zmZM00000000"
+      var regExp = /^([a-zA-Z0-9]{6,12})$/g;
+      let isright= regExp.test(password)
+      console.log(isright)
+      // 请问如何通过正则，将左边的整数每三位添加一个逗号（按数字的千位分隔符表示法显示）
+      //  ？如：12345678 转化为 12,345,678（注：暂时不考虑小数）
+      let mount = '9876543210'
+      // \d => 匹配一个数字字符。等价于 [0-9]
+      // $ 匹配输入字符串的结束位置。如果设置了RegExp 对象的 Multiline 属性，$ 也匹配 '\n' 或 '\r' 之前的位置。
+      let regExpSplit = /(\d)(?=(\d{3})+$)/g
+      mount.replace(regExpSplit, "$1,")
+      console.log(mount)
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,83 @@
+<html>
+
+<head>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>js图片懒加载</title>
+    <meta name="author" content="zhaomi">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no">
+    <style>
+        .module-section img {
+            width: 300px;
+            height: 200px;
+            display: block;
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div">
+        <section>
+            <div style="height:2000px;">
+                站位福
+            </div>
+        </section>
+        <section class="module-section" id="container">
+            <img class="lazy-load"
+                data-src="https://hbimg.huabanimg.com/2cd7a31e4b804d32230dd2e3c97ecb2d3ea1c95b5d9d3-84pbpj_fw658"
+                width="40" height="40" alt="测试懒加载图片" />
+            <img class="lazy-load"
+                data-src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3228682396,2592939583&amp;fm=26&amp;gp=0.jpg"
+                width="40" height="40" alt="测试懒加载图片" />
+            <img class="lazy-load"
+                data-src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3133786024,928802516&amp;fm=26&amp;gp=0.jpg"
+                width="40" height="40" alt="测试懒加载图片" />
+            <img class="lazy-load"
+                data-src="https://hbimg.huabanimg.com/2cd7a31e4b804d32230dd2e3c97ecb2d3ea1c95b5d9d3-84pbpj_fw658"
+                width="40" height="40" alt="测试懒加载图片" />
+            <img class="lazy-load"
+                data-src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2689993400,77662843&amp;fm=26&amp;gp=0.jpg"
+                width="40" height="40" alt="测试懒加载图片" />
+            <img class="lazy-load"
+                data-src="https://hbimg.huabanimg.com/2cd7a31e4b804d32230dd2e3c97ecb2d3ea1c95b5d9d3-84pbpj_fw658"
+                width="40" height="40" alt="测试懒加载图片" />
+            <img class="lazy-load"
+                data-src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2461663585,1009763712&amp;fm=26&amp;gp=0.jpg"
+                width="40" height="40" alt="测试懒加载图片" />
+            <img class="lazy-load"
+                data-src="https://hbimg.huabanimg.com/2cd7a31e4b804d32230dd2e3c97ecb2d3ea1c95b5d9d3-84pbpj_fw658"
+                width="40" height="40" alt="测试懒加载图片" />
+            <img class="lazy-load"
+                data-src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3228682396,2592939583&amp;fm=26&amp;gp=0.jpg"
+                width="40" height="40" alt="测试懒加载图片" />
+            <img class="lazy-load"
+                data-src="https://hbimg.huabanimg.com/2cd7a31e4b804d32230dd2e3c97ecb2d3ea1c95b5d9d3-84pbpj_fw658"
+                width="40" height="40" alt="测试懒加载图片" />
+            <img class="lazy-load"
+                data-src="https://hbimg.huabanimg.com/2cd7a31e4b804d32230dd2e3c97ecb2d3ea1c95b5d9d3-84pbpj_fw658"
+                width="40" height="40" alt="测试懒加载图片" />
+            <img class="lazy-load"
+                data-src="https://hbimg.huabanimg.com/2cd7a31e4b804d32230dd2e3c97ecb2d3ea1c95b5d9d3-84pbpj_fw658"
+                width="40" height="40" alt="测试懒加载图片" />
+        </section>
+    </div>
+    <script src="../jquery-1.12.4.js"></script>
+    <script src="jq.lazyload.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("img.lazy-load").lazyload({
+                event: "scroll", // 事件触发时才加载，click(点击),mouseover(鼠标划过),默认为scroll（滑动）
+                show_type: "fadeIn", //展现方式，show(直接显示),fadeIn(淡入),slideDown(下拉)
+                defaultsrc: "https://faviconer.net/preloaders/810/Rainbow.gif"
+            });
+        });
+    </script>
+</body>
+
+</html>

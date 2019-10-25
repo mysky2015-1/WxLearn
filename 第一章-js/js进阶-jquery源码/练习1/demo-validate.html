@@ -1,0 +1,130 @@
+<html>
+
+<head>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>表单验证</title>
+    <meta name="author" content="zhaomi">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no">
+    <style>
+        .submit {
+            padding: 10px 15px;
+            height: 40px;
+            width: 80px;
+            font-size: 20px;
+            display: block;
+            cursor: pointer;
+        }
+
+        .error {
+            font-size: .85rem;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-label">
+        <section>
+            <form class="cmxform" id="commentForm" method="get" action="">
+                <fieldset>
+                    <legend>输入您的个人信息</legend>
+                    <p>
+                        <label for="name">Name (必需, 最小两个字母)</label>
+                        <input id="name" name="name" minlength="2" type="text" required>
+                    </p>
+                    <p>
+                        <label for="telphone">电话或手机 (必需)</label>
+                        <input id="telphone" type="text" name="telphone" required>
+                    </p>
+                    <p>
+                        <label for="email">E-Mail (必需)</label>
+                        <input id="email" type="email" name="email" value="zm@qq.com" required>
+                    </p>
+                    <p>
+                        <label for="idCard">身份证 (必需)</label>
+                        <input id="idCard" name="idCard" type="text" required>
+                    </p>
+                    <p>
+                        <label for="url">URL (可选)</label>
+                        <input id="url" type="url" name="url">
+                    </p>
+                    <p>
+                        <label for="comment">备注 (必需,最长20个字)</label>
+                        <input id="comment" name="comment" maxlength="20" />
+                    </p>
+                    <p>
+                        <input id="submit" class="submit" type="button" value="Submit">
+                    </p>
+                </fieldset>
+            </form>
+
+        </section>
+    </div>
+    <script src="../jquery-1.12.4.js"></script>
+    <script src="jq.validate.js"></script>
+    <script>
+        $('#submit').on("click", function () {
+            valid();
+        });
+
+        function valid() {
+            var haserror = $("#commentForm").validate({
+                rules: {
+                    name: "",
+                    telphone: {
+                        // required: true,  此处和标签上不可重复设置
+                        telphone: true,
+                    },
+                    email: {
+                        // required: true,
+                        // email: true
+                    },
+                    idCard: {
+                        // required: true,
+                        idCard: true
+                    },
+                    url: {
+                        // url: true
+                    },
+                    comment: {
+                        // required: true,
+                        minlength: 5,
+                        // maxlength: 20
+                    }
+                },
+                messages: {
+                    name: "Name不能为空",
+                    telphone: {
+                        required: "手机号不能为空",
+                        telphone: "手机号码格式不正确，请查证后输入"
+                    },
+                    email: {
+                        required: "E-mail不能为空",
+                        email: "E-mail地址不正确"
+                    },
+
+                    idCard: {
+                        required: "身份证号不能为空",
+                        idCard: "身份证号输入不正确~"
+                    },
+                    url: {
+                        url: "url格式输入不正确"
+                    },
+                    comment: {
+
+                    }
+                }
+            });
+            console.log(haserror);
+            return haserror;
+        }
+    </script>
+</body>
+
+</html>

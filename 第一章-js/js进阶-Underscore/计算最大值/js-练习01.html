@@ -1,0 +1,92 @@
+<html>
+
+<head>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>js第一章考核题5题</title>
+    <meta name="author" content="zhaomi">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no">
+</head>
+
+<body>
+    <div id="div"></div>
+    <script src="underscore-v1.2.js"></script>
+    <script>
+        // 大数组排序计算,生成一个大数组
+        let arr02 = []
+        for(let i=0;i<12;i++){
+            let random = Math.floor(10+i)
+            arr02.push(random)
+        }
+        
+        console.log(_.shellSort(arr02))
+        // console.log(arr02)
+        // console.log(_.indexOf(arr02, 12323, true));
+        // let arr03=[49,38,65,101,76,13,27,49,55,1]
+        arr02 = _.shuffle(arr02)
+       
+        // 去重、去假值
+        // arr03 = _.compact(_.unique(arr03))
+        arr02 = _.compact(_.unique(arr02))
+        // 思路一：通过快速排序,效率最低的
+        console.time('test');
+        arr02 = sort(arr02)
+        function sort(arr){ 
+            for(var i=0;i<arr.length-1;i++){ 
+                for(var j=i+1;j<arr.length;j++){ 
+                    if(arr[i]>arr[j]){/*如果前面的数据比后面的大就交换位置*/
+                        var list=arr[i]; 
+                        arr[i]=arr[j]; 
+                        arr[j]=list; 
+                    }  
+                } 
+            }  
+            return arr; 
+        } 
+        console.log("速度较慢的一种方式---最大值为：",arr02[arr02.length-1],'最小值为：',arr02[0])
+        console.timeEnd('test');
+
+        console.time('test2');
+        
+        // 快速查找，此方法效率更高一点儿
+        var quickSort = function(arr) {
+        　　if (arr.length <= 1) {//如果数组长度小于等于1无需判断直接返回即可 
+                return arr;
+            }
+        　　var pivotIndex = Math.floor(arr.length / 2);//取基准点 
+        　　var pivot = arr.splice(pivotIndex, 1)[0];//取基准点的值,splice(index,1)函数可以返回数组中被删除的那个数
+        　　var left = [];//存放比基准点小的数组
+        　　var right = [];//存放比基准点大的数组 
+        　　for (var i = 0; i < arr.length; i++){ //遍历数组，进行判断分配 
+        　　　　if (arr[i] < pivot) {
+        　　　　　　left.push(arr[i]);//比基准点小的放在左边数组 
+        　　　　} else {
+        　　　　　　right.push(arr[i]);//比基准点大的放在右边数组 
+        　　　　}
+        　　}
+                //递归执行以上操作,对左右两个数组进行操作，直到数组长度为<=1； 
+        　　return quickSort(left).concat([pivot], quickSort(right));
+        };
+        arr02 = quickSort(arr02)
+       
+        console.log("速度较快的一种方式----最大值为：",arr02[arr02.length-1],'最小值为：',arr02[0])
+        console.timeEnd('test2');
+
+        // 第三种速度最快：
+
+        console.time('test3');
+        //最小值
+        console.log("第三种Math方法，速度最快：最大值为：",Math.max.apply(Math,arr02)," ;最小值为： ",Math.min.apply(Math,arr02));
+        //等效于 Math.min.apply({},arr)和Math.min.apply(null,arr);
+        //原本取得最小值的方法是Math.min(n1,n2,n3...), apply可以改变参数的传入形式，第一个参数是什么都不是很重要
+        console.timeEnd('test3');
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<html>
+
+<head>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>js另外一种库underscore-防抖和节流</title>
+    <meta name="author" content="zhaomi">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no">
+</head>
+
+<body>
+    <div id="div" style="height:3000px;">
+        <p>
+            throttle_.throttle(function, wait, [options])
+            创建并返回一个像节流阀一样的函数，当重复调用函数的时候，至少每隔 wait毫秒调用一次该函数。对于想控制一些触发频率较高的事件有帮助。（注：详见：javascript函数的throttle和debounce，感谢
+            @澳利澳先生 的翻译建议）
+        </p>
+
+        <p>
+            默认情况下，throttle将在你调用的第一时间尽快执行这个function，并且，如果你在wait周期内调用任意次数的函数，都将尽快的被覆盖。如果你想禁用第一次首先执行的话，传递{leading:
+            false}，还有如果你想禁用最后一次执行的话，传递{trailing: false}。
+        </p>
+        <p>
+            var throttled = _.throttle(updatePosition, 100);
+            $(window).scroll(throttled);
+            如果需要取消预定的 throttle ，可以在 throttle 函数上调用 .cancel()。
+        </p>
+        <p>
+            debounce_.debounce(function, wait, [immediate])
+            返回 function 函数的防反跳版本, 将延迟函数的执行(真正的执行)在函数最后一次调用时刻的 wait 毫秒之后. 对于必须在一些输入（多是一些用户操作）停止到达之后执行的行为有帮助。 例如:
+            渲染一个Markdown格式的评论预览, 当窗口停止改变大小之后重新计算布局, 等等.
+        </p>
+        <p>
+            在 wait 间隔结束时，将使用最近传递给 debounced（去抖动）函数的参数调用该函数。
+            传参 immediate 为 true， debounce会在 wait 时间间隔的开始调用这个函数 。（注：并且在 waite 的时间之内，不会再次调用。）在类似不小心点了提交按钮两下而提交了两次的情况下很有用。
+            （感谢@ProgramKid 的翻译建议）
+        </p>
+        <p>
+            var lazyLayout = _.debounce(calculateLayout, 300);
+            $(window).resize(lazyLayout);
+            如果需要取消预定的 debounce ，可以在 debounce 函数上调用 .cancel()。
+        </p>
+
+
+
+
+
+    </div>
+    <script src="underscore-v1.1.js"></script>
+    <script>
+        // 节流的应用场景
+        // 游戏射击，keydown事件 
+        // 文本输入，自动完成，keyup事件
+        // 鼠标移动，mousemove事件
+        // dom元素动态定位，window对象的resize和scroll事件
+        // 前两者，节流和防抖都可以，后两者一定是节流
+        // leading 和 trailing只要写一个就行了
+        // var throttle_test = _.throttle(function () {
+        //     console.log("test--节流--zm");
+        // }, 2000, {
+        //     leading: false, //首次不执行
+        // });
+        // throttle_test();
+        // $(window).scroll(throttled);
+        // window.onscroll = _.throttle(function () {
+        //     console.log("test--节流--zm");
+        // }, 1000, {
+        //     // trailing: false,
+        //     // leading: false, 
+        // });
+        // 防抖
+        // var debounce = _.debounce(function () {
+        //     console.log("test--debounce防抖--zm");
+        // }, 1000, true);
+        // debounce();
+        window.onscroll = _.debounce(function () {
+            console.log("test--debounce防抖--zm");
+        }, 1000);
+    </script>
+</body>
+
+</html>

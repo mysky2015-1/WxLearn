@@ -1,0 +1,80 @@
+<html>
+
+<head>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>js第一章考核题6题---如何实现数组的随机排序</title>
+    <meta name="author" content="zhaomi">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no">
+</head>
+
+<body>
+    <div id="div"></div>
+    <script src="underscore-v1.2.js"></script>
+    <script>
+        // 如何实现数组的随机排序
+        let arr = []
+        for(let i=0;i<25;i++){
+            let random = Math.floor(1+i)
+            arr.push(random)
+        }
+        // 思路一：underscore数组洗牌一 随机个数和数组长度之间取断的那个
+        let arr01 = arr.concat()
+        console.log(_.shuffle(arr01))
+        // 思路二：数组洗牌二,利用index下标对应的数据，与数组从前到后相互替换
+        function shuffle2(cloneArr){
+          let len = cloneArr.length
+          for(let i=0;i<len;i++){
+            let index = Math.floor(Math.random()* len)
+            let res = cloneArr[index]  
+            cloneArr[index] = cloneArr[i]
+            cloneArr[i] = res
+          }
+          return cloneArr
+        }
+        let arr02 = arr.concat()
+        console.log(shuffle2(arr02))
+        // 思路三：sort  本身使用sort，会有不完全排序的可能，那我们给sort稍微添加一些东西呢？
+        function shuffle3(arr) { 
+          // arr.sort(() => Math.random() - 0.5);
+          let cloneArr = arr.concat()
+          arr.sort(function () { 
+            return Math.random() - 0.5; 
+          }); 
+          let len = arr.length   
+          for(let i=0;i<len;i++ ){
+            if(arr[i] === cloneArr[i]){
+              // 如果生成的随机数还在原位置上，那就删除提并将它随机插入数组中
+              let index = Math.floor(Math.random()* len)
+              // console.log(index )
+              // console.log('被删除的：',arr[i])
+              // console.log('被添加的：',arr[index])
+              let last = arr.splice(i,1,arr[index])[0]
+              arr[index] = last
+            }
+          }
+          return arr
+        } 
+        let arr03 = arr.concat()
+        console.log(shuffle3(arr03))
+        // 思路四：sort的衍生
+        function shuffle4(arr) { 
+          let i = arr.length; 
+          while (i) { 
+            let j = Math.floor(Math.random() * i--); 
+            [arr[j], arr[i]] = [arr[i], arr[j]]; 
+          }
+          return arr
+        }
+        let arr04 = arr.concat()
+        console.log(shuffle4(arr04))
+
+    </script>
+</body>
+
+</html>

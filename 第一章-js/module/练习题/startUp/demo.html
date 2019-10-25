@@ -1,0 +1,43 @@
+<html>
+
+<head>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title> module的核练习题 </title>
+    <meta name="author" content="zhaomi">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no">
+</head>
+
+<body>
+    <script data-main="common/js" id="seajsnode" src="startUp.js"></script>
+    <script>
+        // 功能要求：通过配置data-main来代替alias路径配置
+        // 我们在使用require("a")后（未配置a的alias，未配置paths，也就是说优先识别alias）require会自动加载common/js/a.js这个文件，而不是a.js，相当于默认配置了paths。
+        // sea.js在2.0版本之后就去掉了这个语法糖，可惜了
+
+        //启动模块加载器   
+        startUp.config({
+            alias: {
+                a: "common/js/a", //a: "./common/js/a",  都可以
+                b: "common/js/b"
+            },
+            preload: [
+
+            ]
+        });
+
+        startUp.use(["a", "b"], function (a, b) {
+            console.log(a);
+            console.log(b);
+            console.log("startUp...");
+        });
+    </script>
+
+</body>
+
+</html>
